@@ -5,7 +5,8 @@ require_once __DIR__ . '/../includes/functions_reservation.php';
 $email = $_GET['email'] ?? '';
 $reservations = [];
 
-if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+$isValid = ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL));
+if ($isValid) {
     $reservations = getReservationsByEmail($pdo, $email);
 }
 ?>
@@ -26,11 +27,11 @@ if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
   <button type="submit">Voir</button>
 </form>
 
-<?php if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)): ?>
+<?php if ($email !== '' && !$isValid): ?>
   <p class="notice">Email invalide.</p>
 <?php endif; ?>
 
-<?php if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)): ?>
+<?php if ($isValid): ?>
   <h2>Résultats pour : <?= htmlspecialchars($email) ?></h2>
 
   <?php if (!$reservations): ?>
@@ -54,5 +55,6 @@ if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
     </table>
   <?php endif; ?>
 <?php endif; ?>
+
 </body>
 </html>

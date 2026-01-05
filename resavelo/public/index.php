@@ -9,12 +9,12 @@ $end_date = $_GET['end_date'] ?? '';
 
 $velos = getAllVelos($pdo);
 
-// filtre prix
+// Filtre prix
 if ($maxPrice !== null) {
     $velos = array_filter($velos, fn($v) => (float)$v['price'] <= $maxPrice);
 }
 
-// filtre disponibilité si dates remplies
+// Filtre disponibilité si dates valides
 $useAvailabilityFilter = ($start_date !== '' && $end_date !== '' && $start_date < $end_date);
 if ($useAvailabilityFilter) {
     $velos = array_filter($velos, function($v) use ($pdo, $start_date, $end_date) {
@@ -34,6 +34,8 @@ if ($useAvailabilityFilter) {
 
 <p>
   <a href="mes_reservations.php">Mes réservations</a>
+  &nbsp;|&nbsp;
+  <a href="../admin/index.php">Admin</a>
 </p>
 
 <form method="GET">
@@ -60,7 +62,7 @@ if ($useAvailabilityFilter) {
       <h2><?= htmlspecialchars($velo['name']) ?></h2>
 
       <?php if (!empty($velo['image_url'])): ?>
-        <img src="<?= htmlspecialchars($velo['image_url']) ?>" alt="" style="max-width:100%;border-radius:8px;">
+        <img src="<?= htmlspecialchars($velo['image_url']) ?>" alt="Vélo" class="card-img">
       <?php endif; ?>
 
       <p><?= htmlspecialchars($velo['description'] ?? '') ?></p>
@@ -71,5 +73,6 @@ if ($useAvailabilityFilter) {
     </div>
   <?php endforeach; ?>
 </div>
+
 </body>
 </html>

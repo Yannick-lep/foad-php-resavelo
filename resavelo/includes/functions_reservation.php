@@ -9,6 +9,7 @@ function checkAvailability(PDO $pdo, int $velo_id, string $start_date, string $e
 
     $quantity = (int)$velo['quantity'];
 
+    // chevauchement : start < end_resa AND end > start_resa
     $sql = "SELECT COUNT(*) as nb
             FROM reservations
             WHERE velo_id = :velo_id
@@ -23,7 +24,6 @@ function checkAvailability(PDO $pdo, int $velo_id, string $start_date, string $e
     ]);
 
     $nb = (int)$stmt->fetch()['nb'];
-
     return $nb < $quantity;
 }
 
@@ -33,7 +33,7 @@ function createReservation(PDO $pdo, int $velo_id, string $client_email, string 
     if (!filter_var($client_email, FILTER_VALIDATE_EMAIL)) {
         return ['ok' => false, 'message' => "Email invalide"];
     }
-    if (empty($start_date) || empty($end_date)) {
+    if ($start_date === '' || $end_date === '') {
         return ['ok' => false, 'message' => "Dates obligatoires"];
     }
     if ($start_date >= $end_date) {
