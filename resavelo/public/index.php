@@ -56,6 +56,9 @@ if ($useAvailabilityFilter) {
   <p class="notice">Pour filtrer la disponibilité, remplis deux dates valides (début < fin).</p>
 <?php endif; ?>
 
+<label>Recherche rapide :</label>
+<input type="text" id="searchBike" placeholder="Ex : électrique, cargo...">
+
 <div class="grid">
   <?php foreach ($velos as $velo): ?>
     <div class="card">
