@@ -39,7 +39,10 @@ $velos = getAllVelos($pdo);
       <td>
         <a href="velo_form.php?id=<?= (int)$v['id'] ?>">Modifier</a>
         |
-        <a href="velos.php?delete=<?= (int)$v['id'] ?>" onclick="return confirm('Supprimer ?')">Supprimer</a>
+       <a href="velos.php?delete=<?= $v['id'] ?>" class="delete-btn">
+            Supprimer
+        </a>
+
       </td>
     </tr>
   <?php endforeach; ?>
